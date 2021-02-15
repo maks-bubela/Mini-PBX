@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Mini_PBX
 {
-    class Program
+    class Mini_PBX
     {
         static ServerObject server; // сервер
         static Thread listenThread; // потока для прослушивания
