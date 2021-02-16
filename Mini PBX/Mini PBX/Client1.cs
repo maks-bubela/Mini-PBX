@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mini_PBX
 {
@@ -12,7 +13,6 @@ namespace Mini_PBX
         TcpClient client;
         ServerObject server; // объект сервера
         public string GetPhone_number() { return phone_number; }
-
         public ClientObject(TcpClient tcpClient, ServerObject serverObject)
         {
             client = tcpClient;
@@ -74,7 +74,11 @@ namespace Mini_PBX
             }
         }
 
-        private string GetMessage()
+        public async void ProcessAsync()
+        {
+            await Task.Run(() => Process());
+        }
+        public string GetMessage()
         {
             byte[] data = new byte[64];
             StringBuilder builder = new StringBuilder();
@@ -89,7 +93,7 @@ namespace Mini_PBX
             return builder.ToString();
         }
 
-        protected internal void Close()
+        public void Close()
         {
             if (Stream != null)
                 Stream.Close();
