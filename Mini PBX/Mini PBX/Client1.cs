@@ -74,9 +74,12 @@ namespace Mini_PBX
             }
         }
 
-        public async void ProcessAsync()
+        public Task ProcessAsync()
         {
-            await Task.Run(() => Process());
+            return Task.Run(() =>
+            {
+                Process();
+            });
         }
         public string GetMessage()
         {

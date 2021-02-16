@@ -15,7 +15,6 @@ namespace Mini_PBX
                 // работает
                 listenThread = new Thread(new ThreadStart(server.Listen));
                 listenThread.Start(); //старт потока
-                // server.ListenAsync(); // не работает
             }
             catch (Exception ex)
             {

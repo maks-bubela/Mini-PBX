@@ -38,31 +38,27 @@ namespace Mini_PBX
         }
         public void Listen()
         {
-            try
-            {
-                tcpListener = new TcpListener(IPAddress.Any, 8888);
-                tcpListener.Start();
-                Console.WriteLine("АТС запущен. Ожидание подключений...");
-
-                while (true)
+                try
                 {
-                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    tcpListener = new TcpListener(IPAddress.Any, 8888);
+                    tcpListener.Start();
+                    Console.WriteLine("АТС запущен. Ожидание подключений...");
 
-                    ClientObject clientObject = new ClientObject(tcpClient, this);
-                    clientObject.ProcessAsync();
+                    while (true)
+                    {
+                        TcpClient tcpClient =  tcpListener.AcceptTcpClient();
+
+                        ClientObject clientObject =  new ClientObject(tcpClient, this);
+                        clientObject.ProcessAsync();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Disconnect();
-            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Disconnect();
+                }
         }
 
-        public async void ListenAsync()
-        {
-            await Task.Run(() => Listen());
-        }
 
         public void BroadcastMessage(string message, string phone_number)
         {
