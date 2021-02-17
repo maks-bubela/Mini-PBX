@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mini_PBX
 {
@@ -14,7 +15,7 @@ namespace Mini_PBX
         List<ClientObject> clients = new List<ClientObject>();
         List<CallClients> call_clients = new List<CallClients>();
 
-        protected internal void RemoveCall(ClientObject client)
+        public void RemoveCall(ClientObject client)
         {
             for(int i = 0; i < call_clients.Count; i++)
             {
@@ -23,11 +24,11 @@ namespace Mini_PBX
             }
         }
 
-        protected internal void AddConnection(ClientObject clientObject)
+        public void AddConnection(ClientObject clientObject)
         {
             clients.Add(clientObject);
         }
-        protected internal void RemoveConnection(string phone_number)
+        public void RemoveConnection(string phone_number)
         {
             for(int i=0;i<clients.Count;i++)
             {
@@ -35,31 +36,31 @@ namespace Mini_PBX
                     clients.Remove(clients[i]);
             }
         }
-        protected internal void Listen()
+        public void Listen()
         {
-            try
-            {
-                tcpListener = new TcpListener(IPAddress.Any, 8888);
-                tcpListener.Start();
-                Console.WriteLine("АТС запущен. Ожидание подключений...");
-
-                while (true)
+                try
                 {
-                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    tcpListener = new TcpListener(IPAddress.Any, 8888);
+                    tcpListener.Start();
+                    Console.WriteLine("АТС запущен. Ожидание подключений...");
 
-                    ClientObject clientObject = new ClientObject(tcpClient, this);
-                    Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
-                    clientThread.Start();
+                    while (true)
+                    {
+                        TcpClient tcpClient =  tcpListener.AcceptTcpClient();
+
+                        ClientObject clientObject =  new ClientObject(tcpClient, this);
+                        clientObject.ProcessAsync();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Disconnect();
-            }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Disconnect();
+                }
         }
 
-        protected internal void BroadcastMessage(string message, string phone_number)
+
+        public void BroadcastMessage(string message, string phone_number)
         {
             byte[] data = Encoding.Unicode.GetBytes(message);
             for (int i = 0; i < call_clients.Count; i++)
@@ -74,7 +75,7 @@ namespace Mini_PBX
             }
         }
 
-        protected internal void CheckAndConect(string phone_number, ClientObject caller_client)
+        public void CheckAndConect(string phone_number, ClientObject caller_client)
         {
             string message;
             byte[] data;
@@ -104,7 +105,7 @@ namespace Mini_PBX
             caller_client.Stream.Write(data, 0, data.Length);
         }
 
-        protected internal void Disconnect()
+        public void Disconnect()
         {
             tcpListener.Stop();
 

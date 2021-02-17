@@ -12,6 +12,7 @@ namespace Mini_PBX
             try
             {
                 server = new ServerObject();
+                // работает
                 listenThread = new Thread(new ThreadStart(server.Listen));
                 listenThread.Start(); //старт потока
             }
