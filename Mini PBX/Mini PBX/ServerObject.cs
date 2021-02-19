@@ -11,9 +11,15 @@ namespace Mini_PBX
 {
     public class ServerObject
     {
-        static TcpListener tcpListener;
+        bool exit_checker = true;
+        TcpListener tcpListener;
         List<ClientObject> clients = new List<ClientObject>();
         List<CallClients> call_clients = new List<CallClients>();
+
+        public void CloseApp(bool close)
+        {
+            exit_checker = close;
+        }
 
         public void RemoveCall(ClientObject client)
         {
@@ -43,8 +49,7 @@ namespace Mini_PBX
                     tcpListener = new TcpListener(IPAddress.Any, 8888);
                     tcpListener.Start();
                     Console.WriteLine("АТС запущен. Ожидание подключений...");
-
-                    while (true)
+                    while (exit_checker)
                     {
                         TcpClient tcpClient =  tcpListener.AcceptTcpClient();
 
@@ -58,6 +63,7 @@ namespace Mini_PBX
                     Disconnect();
                 }
         }
+
 
 
         public void BroadcastMessage(string message, string phone_number)

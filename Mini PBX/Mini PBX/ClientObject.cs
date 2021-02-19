@@ -43,7 +43,8 @@ namespace Mini_PBX
                 server.CheckAndConect(call_numb, this);
                 //server.BroadcastMessage(message, this.phone_number);
                 Console.WriteLine(message);
-                while (true)
+                string check = "";
+                while (check!= "Сбросил")
                 {
                     try
                     {
@@ -58,7 +59,7 @@ namespace Mini_PBX
                         Console.WriteLine(message);
                         server.BroadcastMessage(message, this.phone_number);
                         server.RemoveCall(this);
-                        break;
+                        check = "Сбросил";
                     }
                 }
             }
