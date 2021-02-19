@@ -5,33 +5,35 @@ using System.Text;
 
 namespace Mini_PBX_Client
 {
-    class Program
+    public class Program
     {
+        
         static string phone_number;
         private const string host = "127.0.0.1";
         private const int port = 8888;
-        static TcpClient client;
-        static NetworkStream stream;
-
-        static void Main(string[] args)
+        public static TcpClient client;
+        public static NetworkStream stream;
+       
+        public static void Main(string[] args)
         {
+            Client c = new Client();
             Console.Write("Введите свой номер: ");
             phone_number = Console.ReadLine();
             client = new TcpClient();
             try
             {
-                client.Connect(host, port); 
-                stream = client.GetStream(); 
+                client.Connect(host, port);
+                stream = client.GetStream();
 
                 string message = phone_number;
                 byte[] data = Encoding.Unicode.GetBytes(message);
                 stream.Write(data, 0, data.Length);
 
-                
+
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                receiveThread.Start(); 
+                receiveThread.Start();
                 Console.WriteLine("Ваш номер: {0}", phone_number);
-                SendMessage();
+                c.SendMessage(stream);
             }
             catch (Exception ex)
             {
@@ -39,11 +41,19 @@ namespace Mini_PBX_Client
             }
             finally
             {
-                Disconnect();
+                c.Disconnect(stream, client);
             }
+
         }
-       
-        static void SendMessage()
+        private static void ReceiveMessage()
+        {
+            Client c = new Client();
+            c.ReceiveMessage(stream, client);
+        }
+    }
+    public class Client
+    {
+        public void SendMessage(NetworkStream stream)
         {
             Console.Write("Введите номер: ");
             string message = Console.ReadLine();
@@ -57,8 +67,8 @@ namespace Mini_PBX_Client
                 stream.Write(data, 0, data.Length);
             }
         }
-       
-        static void ReceiveMessage()
+
+        public void ReceiveMessage(NetworkStream stream, TcpClient client)
         {
             while (true)
             {
@@ -79,20 +89,23 @@ namespace Mini_PBX_Client
                 }
                 catch
                 {
-                    Console.WriteLine("Конец!"); 
+                    Console.WriteLine("Конец!");
                     Console.ReadLine();
-                    Disconnect();
+                    Disconnect(stream, client);
                 }
             }
         }
 
-        static void Disconnect()
+        public void Disconnect(NetworkStream stream, TcpClient client)
         {
             if (stream != null)
                 stream.Close();
             if (client != null)
                 client.Close();
-            Environment.Exit(0); 
-        }
+            Environment.Exit(0);
+        }        
     }
 }
+
+
+
