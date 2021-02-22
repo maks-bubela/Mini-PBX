@@ -43,9 +43,8 @@ namespace Mini_PBX
                 server.CheckAndConect(call_numb, this);
                 //server.BroadcastMessage(message, this.phone_number);
                 Console.WriteLine(message);
-                string check = "";
-                while (check!= "Сбросил")
-                {
+                bool check = true;
+
                     try
                     {
                         message = GetMessage();
@@ -59,9 +58,9 @@ namespace Mini_PBX
                         Console.WriteLine(message);
                         server.BroadcastMessage(message, this.phone_number);
                         server.RemoveCall(this);
-                        check = "Сбросил";
+                        check = false;
                     }
-                }
+                
             }
             catch (Exception e)
             {
@@ -87,13 +86,8 @@ namespace Mini_PBX
             byte[] data = new byte[64];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
-            do
-            {
-                bytes = Stream.Read(data, 0, data.Length);
-                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-            }
-            while (Stream.DataAvailable);
-
+            bytes = Stream.Read(data, 0, data.Length);
+            builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             return builder.ToString();
         }
 
