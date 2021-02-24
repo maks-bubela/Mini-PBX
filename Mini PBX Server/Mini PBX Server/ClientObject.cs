@@ -9,6 +9,7 @@ namespace Mini_PBX
     public class ClientObject
     {
         private string phone_number;
+
         protected internal NetworkStream Stream { get; private set; }
         TcpClient client;
         ServerObject server; // объект сервера
@@ -22,12 +23,13 @@ namespace Mini_PBX
 
         public void Process()
         {
+            string message = "";
             try
             {
                 string call_numb="";
                 Stream = client.GetStream();
                 // Get phone number
-                string message = GetMessage();
+                message = GetMessage();
                 phone_number = message;
 
                 message = phone_number + ": На линии ";
@@ -37,14 +39,14 @@ namespace Mini_PBX
                 message = phone_number + ": " + message;
                 for(int i = 5; i < message.Length; i++)
                 {
-                    if(message[i]!>='0' && message[i] <= '9')
+                    if(message[i] >='0' && message[i] <= '9')
                          call_numb += message[i];
                 }
                 server.CheckAndConect(call_numb, this);
-                //server.BroadcastMessage(message, this.phone_number);
                 Console.WriteLine(message);
                 bool check = true;
-
+                while (check)
+                {
                     try
                     {
                         message = GetMessage();
@@ -60,7 +62,7 @@ namespace Mini_PBX
                         server.RemoveCall(this);
                         check = false;
                     }
-                
+                }
             }
             catch (Exception e)
             {
@@ -86,7 +88,7 @@ namespace Mini_PBX
             byte[] data = new byte[64];
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
-            bytes = Stream.Read(data, 0, data.Length);
+             bytes = Stream.Read(data, 0, data.Length);
             builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             return builder.ToString();
         }
