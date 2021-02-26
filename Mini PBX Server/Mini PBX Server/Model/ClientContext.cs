@@ -11,7 +11,7 @@ namespace Mini_PBX_Server.Model
             : base("name=ClientContext")
         {
         }
-        DbSet<ClientDTO> clientDTO { get; set; }
+        public DbSet<ClientDTO> clientDTO { get; set; }
     }
 
 
