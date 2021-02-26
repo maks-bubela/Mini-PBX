@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mini_PBX.Models
 {
-    class ClientDTO
+    public class ClientDTO
     {
         public long Id { get; set; }
         [MaxLength(256)]
