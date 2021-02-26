@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Mini_PBX_Server.Model;
+using Mini_PBX.Models;
 
 namespace Mini_PBX
 {
@@ -74,6 +76,16 @@ namespace Mini_PBX
                 server.RemoveConnection(this.phone_number);
                 Close();
             }
+        }
+
+        public void clientRegistration(string phone_number, string userName)
+        {
+            ClientContext context = new ClientContext();
+            ClientDTO newClient = new ClientDTO();
+            newClient.phone_number = phone_number;
+            newClient.userName = userName;
+            context.clientDTO.Add(newClient);
+            context.SaveChanges();
         }
 
         public Task ProcessAsync()
