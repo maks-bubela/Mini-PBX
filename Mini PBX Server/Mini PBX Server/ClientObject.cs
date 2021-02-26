@@ -33,7 +33,6 @@ namespace Mini_PBX
                 // Get phone number
                 message = GetMessage();
                 phone_number = message;
-
                 message = phone_number + ": На линии ";
                 Console.WriteLine(message);
 
@@ -86,6 +85,14 @@ namespace Mini_PBX
             newClient.userName = userName;
             context.clientDTO.Add(newClient);
             context.SaveChanges();
+        }
+        public bool clientLogin(string phone_number, string userName)
+        {
+            ClientDTO clientDTO = new ClientDTO();
+            if (clientDTO.phone_number == phone_number && clientDTO.userName == userName)
+                return true;
+            else
+                return false;
         }
 
         public Task ProcessAsync()
