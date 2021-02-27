@@ -17,13 +17,15 @@ namespace Mini_PBX_Client
         public static void Main(string[] args)
         {
             Client c = new Client();
-            string message = userName + phone_number;
             
             Console.Write("Введите свой номер: ");
             phone_number = Console.ReadLine();
 
             Console.Write("Введите свое имя: ");
             userName = Console.ReadLine();
+
+            string message = userName + phone_number;
+
             client = new TcpClient();
             try
             {
