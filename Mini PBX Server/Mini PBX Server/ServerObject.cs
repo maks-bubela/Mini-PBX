@@ -15,7 +15,8 @@ namespace Mini_PBX
         TcpListener tcpListener;
         List<ClientObject> clients = new List<ClientObject>();
         List<CallClients> call_clients = new List<CallClients>();
-
+        Action<string, string> _callback;
+ 
         public void CloseApp(bool close)
         {
             exit_checker = close;

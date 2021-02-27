@@ -15,6 +15,7 @@ namespace Mini_PBX
         protected internal NetworkStream Stream { get; private set; }
         TcpClient client;
         ServerObject server; // объект сервера
+        Action<string, string> _callback;
         public string GetPhone_number() { return phone_number; }
         public ClientObject(TcpClient tcpClient, ServerObject serverObject)
         {
