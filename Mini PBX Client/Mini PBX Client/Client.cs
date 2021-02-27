@@ -41,9 +41,9 @@ namespace Mini_PBX_Client
                     string message = builder.ToString();
                     Console.WriteLine(message);
                 }
-                catch
+                catch(Exception e)
                 {
-                    Console.WriteLine("Конец!");
+                    Console.WriteLine(e.Message);
                     Console.ReadLine();
                     Disconnect(stream, client);
                 }
