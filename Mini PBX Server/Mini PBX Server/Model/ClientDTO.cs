@@ -8,11 +8,7 @@ namespace Mini_PBX.Models
     public class ClientDTO
     {
         public long Id { get; set; }
-        [MaxLength(256)]
-        [Required]
         public string userName { get; set; }
-        [Required]
-        [MaxLength(3)]
         public string phone_number { get; set; }
     }
 }
