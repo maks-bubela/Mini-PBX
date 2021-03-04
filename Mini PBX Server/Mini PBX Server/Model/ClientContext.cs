@@ -12,6 +12,10 @@ namespace Mini_PBX_Server.Model
         {
         }
         public DbSet<ClientDTO> clientDTO { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new ClientConfiguration());
+        }
     }
 
 
