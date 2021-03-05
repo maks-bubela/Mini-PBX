@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Mini_PBX_Server.Model;
 using Mini_PBX.Models;
+using System.Linq;
 
 namespace Mini_PBX
 {
@@ -31,6 +31,7 @@ namespace Mini_PBX
             string userName = "";
             try
             {
+                ClientRepository clientRepository = new ClientRepository();
                 Stream = client.GetStream();
                 // Get phone number
                 message = GetMessage();
@@ -43,8 +44,8 @@ namespace Mini_PBX
                 }
                 if (phone_number.Length == 3)
                 {
-                    if (!clientLogin(phone_number, userName)) { }
-                        clientRegistration(phone_number, userName);
+                    if (!clientRepository.clientLogin(phone_number, userName))
+                        clientRepository.clientRegistration(phone_number, userName);
                     message = phone_number + ": На линии ";
                     Console.WriteLine(message);
 
@@ -89,25 +90,6 @@ namespace Mini_PBX
                 Close();
             }
         }
-
-        public void clientRegistration(string phone_number, string userName)
-        {
-            ClientContext context = new ClientContext();
-            ClientDTO newClient = new ClientDTO();
-            newClient.phone_number = phone_number;
-            newClient.userName = userName;
-            context.clientDTO.Add(newClient);
-            context.SaveChanges();
-        }
-        public bool clientLogin(string phone_number, string userName)
-        {
-            ClientDTO clientDTO = new ClientDTO();
-            if (clientDTO.phone_number == phone_number && clientDTO.userName == userName)
-                return true;
-            else
-                return false;
-        }
-
         public Task ProcessAsync()
         {
             return Task.Run(() =>
