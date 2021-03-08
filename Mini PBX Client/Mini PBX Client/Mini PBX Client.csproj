@@ -6,4 +6,8 @@
     <RootNamespace>Mini_PBX_Client</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
 </Project>
