@@ -58,9 +58,25 @@
   <ItemGroup>
     <Compile Include="CallClients.cs" />
     <Compile Include="ClientObject.cs" />
+    <Compile Include="Migrations\202103041309356_InitialCreate.cs" />
+    <Compile Include="Migrations\202103041309356_InitialCreate.designer.cs">
+      <DependentUpon>202103041309356_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103041501541_phone_number_smallint_to_string.cs" />
+    <Compile Include="Migrations\202103041501541_phone_number_smallint_to_string.designer.cs">
+      <DependentUpon>202103041501541_phone_number_smallint_to_string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103111650132_Client.cs" />
+    <Compile Include="Migrations\202103111650132_Client.designer.cs">
+      <DependentUpon>202103111650132_Client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClientContext.cs" />
     <Compile Include="Model\ClientDTO.cs" />
     <Compile Include="Model\ClientConfiguration.cs" />
+    <Compile Include="Model\ClientRepository.cs" />
+    <Compile Include="Model\IClientRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerObject.cs" />
@@ -68,6 +84,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202103041309356_InitialCreate.resx">
+      <DependentUpon>202103041309356_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103041501541_phone_number_smallint_to_string.resx">
+      <DependentUpon>202103041501541_phone_number_smallint_to_string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103111650132_Client.resx">
+      <DependentUpon>202103111650132_Client.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
