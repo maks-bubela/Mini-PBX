@@ -9,11 +9,9 @@ namespace Mini_PBX_Server.Model
 {
     public interface IClientRepository
     {
-        string GetClientUserName(string phone_number);
-        string GetClientPhoneNumber(string userName);
-        ClientDTO GetClient(string phone_number, string userName);
-        void clientRegistration(string phone_number, string userName);
-        bool clientLogin(string phone_number, string userName);
+        Client GetClient(string phone_number, string userName);
+        void AddClientToDataBase(string phone_number, string userName);
+        bool IsClientExist(string phone_number, string userName);
 
     }
 }
