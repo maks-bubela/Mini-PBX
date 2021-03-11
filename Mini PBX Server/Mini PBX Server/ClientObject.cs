@@ -44,8 +44,8 @@ namespace Mini_PBX
                 }
                 if (phone_number.Length == 3)
                 {
-                    if (!clientRepository.clientLogin(phone_number, userName))
-                        clientRepository.clientRegistration(phone_number, userName);
+                    if (!clientRepository.IsClientExist(phone_number, userName))
+                        clientRepository.AddClientToDataBase(phone_number, userName);
                     message = phone_number + ": На линии ";
                     Console.WriteLine(message);
 
