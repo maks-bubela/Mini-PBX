@@ -18,7 +18,7 @@ namespace Mini_PBX_Server.Model
                  .IsRequired();
             Property(u => u.phone_number)
                 .IsRequired()
-                .HasColumnType("smallint")
+                .HasColumnType("varchar")
                 .HasMaxLength(3);
             Property(u => u.userName)
                 .IsRequired()
