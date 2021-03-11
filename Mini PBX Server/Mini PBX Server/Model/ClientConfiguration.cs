@@ -12,7 +12,7 @@ namespace Mini_PBX_Server.Model
     {
         public ClientConfiguration()
         {
-            ToTable("ClientDTOes")
+            ToTable("Client")
                  .HasKey(u => u.Id)
                  .Property(u => u.Id)
                  .IsRequired();
