@@ -11,16 +11,15 @@ namespace Mini_PBX_Server.Model
     {
         public Client GetClient(string phone_number,string userName)
         {
-            ClientContext context = new ClientContext();
             Client client = new Client();
-            var clientDTO = context.clientDTO
+            var clients = new ClientContext().client
                        .Where(c => c.phone_number == phone_number)
                        .Where(c => c.userName == userName).ToList();
-            if (clientDTO.Count > 0)
+            if (clients.Count > 0)
             {
-                client.Id = clientDTO[0].Id;
-                client.phone_number = clientDTO[0].phone_number;
-                client.userName = clientDTO[0].userName;
+                client.Id = clients[0].Id;
+                client.phone_number = clients[0].phone_number;
+                client.userName = clients[0].userName;
                 return client;
             }
             return null;
@@ -30,23 +29,17 @@ namespace Mini_PBX_Server.Model
         public void AddClientToDataBase(string phone_number, string userName)
         {
             ClientContext context = new ClientContext();
-            ClientDTO newClient = new ClientDTO();
+            Client newClient = new Client();
             newClient.phone_number = phone_number;
             newClient.userName = userName;
-            context.clientDTO.Add(newClient);
+            context.client.Add(newClient);
             context.SaveChanges();
         }
         public bool IsClientExist(string phone_number, string userName)
         {
-            ClientContext context = new ClientContext();
-            var client = context.clientDTO
-                       .Where(c => c.phone_number == phone_number)
-                       .Where(c => c.userName == userName).ToList();
-
-            if (client.Count > 0 && client[0].phone_number == phone_number && client[0].userName == userName)
+            if (new ClientContext().client.Where(o => o.phone_number == phone_number).Any(o => o.userName == userName))
                 return true;
-            else
-                return false;
+            return false;
         }
     }
 }
