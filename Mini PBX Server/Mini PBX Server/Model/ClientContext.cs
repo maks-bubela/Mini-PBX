@@ -8,7 +8,10 @@ namespace Mini_PBX_Server.Model
     public class ClientContext : DbContext
     {
         public ClientContext()
-            : base("name=ClientContext")
+        {
+
+        }
+        public ClientContext(string connectionString) : base(connectionString)
         {
         }
         public DbSet<Client> client { get; set; }
