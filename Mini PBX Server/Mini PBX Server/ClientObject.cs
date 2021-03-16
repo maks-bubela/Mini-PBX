@@ -3,8 +3,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Mini_PBX_Server.Model;
-using Mini_PBX.Models;
-using System.Linq;
 
 namespace Mini_PBX
 {

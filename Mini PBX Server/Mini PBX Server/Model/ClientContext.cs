@@ -1,7 +1,4 @@
-﻿using Mini_PBX.Models;
-using System;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 
 namespace Mini_PBX_Server.Model
 {
