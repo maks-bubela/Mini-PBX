@@ -72,11 +72,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Client.cs" />
-    <Compile Include="Model\ClientContext.cs" />
-    <Compile Include="Model\ClientDTO.cs" />
-    <Compile Include="Model\ClientConfiguration.cs" />
-    <Compile Include="Model\ClientRepository.cs" />
-    <Compile Include="Model\IClientRepository.cs" />
+    <Compile Include="Context\ClientContext.cs" />
+    <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DB configuration\ClientConfiguration.cs" />
+    <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="Repository\IClientRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerObject.cs" />
