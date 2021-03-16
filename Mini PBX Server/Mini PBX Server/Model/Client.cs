@@ -11,5 +11,10 @@ namespace Mini_PBX_Server.Model
         public long Id { get; set; }
         public string userName { get; set; }
         public string phone_number { get; set; }
+        public Client(string phone_number, string userName)
+        {
+            this.userName = userName;
+            this.phone_number = phone_number;
+        }
     }
 }
