@@ -54,7 +54,7 @@ namespace Mini_PBX
                         if(message[i] >='0' && message[i] <= '9')
                              call_numb += message[i];
                     }
-                    server.CheckAndConect(call_numb, this);
+                    server.CheckAndConectAsync(call_numb, this);
                     Console.WriteLine(message);
                     bool check = true;
                     while (check)
