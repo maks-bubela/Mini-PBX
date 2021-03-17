@@ -79,6 +79,13 @@ namespace Mini_PBX
                 }
             }
         }
+        public Task BroadcastMessageAsync(string message, string phone_number)
+        {
+            return Task.Run(() =>
+            {
+                BroadcastMessage(message, phone_number);
+            });
+        }
 
         public void CheckAndConect(string phone_number, ClientObject caller_client)
         {
