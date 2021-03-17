@@ -3,7 +3,7 @@ using Mini_PBX.Models;
 
 namespace Mini_PBX_Server.Model
 {
-    public class ClientConfiguration : EntityTypeConfiguration<ClientDTO>
+    public class ClientConfiguration : EntityTypeConfiguration<Client>
     {
         public ClientConfiguration()
         {
