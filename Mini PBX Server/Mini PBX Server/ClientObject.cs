@@ -64,13 +64,13 @@ namespace Mini_PBX
                             message = GetMessage();
                             message = String.Format("{0}: {1}", phone_number, message);
                             Console.WriteLine(message);
-                            server.BroadcastMessage(message, this.phone_number);
+                            server.BroadcastMessageAsync(message, this.phone_number);
                         }
                         catch
                         {
                             message = String.Format("{0}: Сбросил", phone_number);
                             Console.WriteLine(message);
-                            server.BroadcastMessage(message, this.phone_number);
+                            server.BroadcastMessageAsync(message, this.phone_number);
                             server.RemoveCall(this);
                             check = false;
                         }
