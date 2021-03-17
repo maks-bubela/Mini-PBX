@@ -10,7 +10,14 @@ namespace Mini_PBX_Server.Model
         }
         public void AddClientToDataBase(string phone_number, string userName)
         {
-            new ClientContext(new Client(phone_number, userName));
+            ClientContext context = new ClientContext();
+            var client = new Client
+            {
+                phone_number = phone_number,
+                userName = userName
+            };
+            context.client.Add(client);
+            context.SaveChanges();
         }
         public bool IsClientExist(string phone_number, string userName)
         {
