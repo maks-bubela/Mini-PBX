@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Mini_PBX
 {
@@ -107,6 +108,14 @@ namespace Mini_PBX
             message = "Абонента с данным номером не существует";
             data = Encoding.Unicode.GetBytes(message);
             caller_client.Stream.Write(data, 0, data.Length);
+        }
+
+        public Task CheckAndConectAsync(string phone_number, ClientObject caller_client)
+        {
+            return Task.Run(() =>
+            {
+                CheckAndConect(phone_number, caller_client);
+            });
         }
 
         public void Disconnect()
