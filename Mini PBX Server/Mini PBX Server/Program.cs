@@ -6,15 +6,13 @@ namespace Mini_PBX
     class Program
     {
         static ServerObject server; // сервер
-        static Thread listenThread; // потока для прослушивания
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             try
             {
                 server = new ServerObject();
-                listenThread = new Thread(new ThreadStart(server.Listen));
-                listenThread.Start(); //старт потока
+                server.Listen();
             }
             catch (Exception ex)
             {
