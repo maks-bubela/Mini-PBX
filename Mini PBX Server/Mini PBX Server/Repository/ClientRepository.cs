@@ -4,13 +4,17 @@ namespace Mini_PBX_Server.Model
 {
     class ClientRepository : IClientRepository
     {
+        private ClientContext context;
+        public ClientRepository(ClientContext context)
+        {
+            this.context = context;
+        }
         public Client GetClient(string phone_number,string userName)
         {
-            return new ClientContext().client.FirstOrDefault(u => IsClientExist(phone_number, userName));
+            return context.client.FirstOrDefault(u => IsClientExist(phone_number, userName));
         }
         public void AddClientToDataBase(string phone_number, string userName)
         {
-            ClientContext context = new ClientContext();
             var client = new Client
             {
                 phone_number = phone_number,
@@ -21,7 +25,7 @@ namespace Mini_PBX_Server.Model
         }
         public bool IsClientExist(string phone_number, string userName)
         {
-            return new ClientContext().client.Where(o => o.phone_number == phone_number).Any(o => o.userName == userName);
+            return context.client.Where(o => o.phone_number == phone_number).Any(o => o.userName == userName);
         }
     }
 }
