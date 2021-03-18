@@ -5,13 +5,12 @@ namespace Mini_PBX
 {
     class Program
     {
-        static ServerObject server; // сервер
         static void Main(string[] args)
         {
+            ServerObject server = new ServerObject();
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             try
             {
-                server = new ServerObject();
                 server.Listen();
             }
             catch (Exception ex)
@@ -22,6 +21,7 @@ namespace Mini_PBX
         }
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
+            ServerObject server = new ServerObject();
             server.CloseApp(false);
         }
     }
