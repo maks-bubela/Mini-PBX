@@ -29,7 +29,8 @@ namespace Mini_PBX
             string userName = "";
             try
             {
-                ClientRepository clientRepository = new ClientRepository();
+                ClientContext context = new ClientContext();
+                ClientRepository clientRepository = new ClientRepository(context);
                 Stream = client.GetStream();
                 // Get phone number
                 message = GetMessage();
