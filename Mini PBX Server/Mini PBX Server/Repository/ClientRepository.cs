@@ -7,7 +7,8 @@ namespace Mini_PBX_Server.Model
         private ClientContext context;
         public ClientRepository(ClientContext context)
         {
-            this.context = context;
+            if(context != null )
+                this.context = context;
         }
         public Client GetClient(string phone_number,string userName)
         {
