@@ -63,6 +63,11 @@ namespace Mini_PBX
                 }
         }
 
+        public void BroadcastMessage(string message, ClientObject client)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            client.Stream.Write(data, 0, data.Length);
+        }
 
 
         public void BroadcastMessage(string message, string phone_number)
