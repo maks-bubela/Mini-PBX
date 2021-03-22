@@ -45,7 +45,17 @@ namespace Mini_PBX
                 if (phone_number.Length == 3)
                 {
                     if (!clientRepository.IsClientExist(phone_number, userName))
+                    {
                         clientRepository.AddClientToDataBase(phone_number, userName);
+                        message = "Регистрация прошла успешно";
+                        Console.WriteLine(message);
+                        server.BroadcastMessage(String.Format("\n" + message + "\nВаш никнейм {0} \nВаш номер телефона : {1}", userName, phone_number), this);
+                    }
+                    else
+                    {
+                        message = "Авторизация прошла успешно";
+                        server.BroadcastMessage(String.Format("\n" + message + "\nВаш никнейм {0} \nВаш номер телефона : {1}", userName, phone_number), this);
+                    }
                     message = phone_number + ": На линии ";
                     Console.WriteLine(message);
 
