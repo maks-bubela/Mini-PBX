@@ -40,7 +40,15 @@ namespace Mini_PBX_Client
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start();
                 Console.WriteLine($"Вашие данные: {userName}:{phone_number}");
-                c.SendMessage(stream);
+                string choice="";
+                while (choice != "0")
+                {
+                    Console.WriteLine("Отправить запрос на соединение нажмите 1\nЧтобы выйти нажмите 0 \n: ");
+                    choice = Console.ReadLine();
+                    if (choice == "1")
+                        c.tryToConect(stream);
+                }
+                c.Disconnect(stream, client);
             }
             catch (Exception ex)
             {
