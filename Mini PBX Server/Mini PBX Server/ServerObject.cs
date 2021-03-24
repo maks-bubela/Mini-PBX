@@ -100,9 +100,9 @@ namespace Mini_PBX
             {
                 if (clients[i].GetPhone_number() == phone_number)
                 {
-                    for(int j = 0; j < call_clients.Count; j++)
+                    for (int j = 0; j < call_clients.Count; j++)
                     {
-                        if (call_clients[j].checkClient(clients[i]))
+                        if (call_clients[j].checkClient(clients[i]) && call_clients[j].GetWaitNumber() == null)
                         {
                             message = "Клиент занят";
                             data = Encoding.Unicode.GetBytes(message);
@@ -110,16 +110,33 @@ namespace Mini_PBX
                             return;
                         }
                     }
-                    message = "Идет подключение";
-                    data = Encoding.Unicode.GetBytes(message);
-                    caller_client.Stream.Write(data, 0, data.Length);
-                    call_clients.Add(new CallClients(caller_client,clients[i]));
-                    return;
                 }
             }
-            message = "Абонента с данным номером не существует";
+            for (int i = 0; i < call_clients.Count; i++)
+            {
+                if (call_clients[i].checkWaitCall(caller_client.GetPhone_number()))
+                {
+                    call_clients[i].SetSecondClient(caller_client);
+                    message = "Звонок начат";
+                    data = Encoding.Unicode.GetBytes(message);
+                    caller_client.Stream.Write(data, 0, data.Length);
+                    call_clients[i].GetFirstClient().Stream.Write(data, 0, data.Length);
+                    return;
+                }
+
+            }
+            message = "Ожидайте подключения";
             data = Encoding.Unicode.GetBytes(message);
             caller_client.Stream.Write(data, 0, data.Length);
+            call_clients.Add(new CallClients(caller_client, phone_number));
+            for (int i = 0; i < clients.Count; i++)
+            {
+                if (clients[i].GetPhone_number() == phone_number)
+                {
+                    this.BroadcastMessage("Входящий вызов от " + caller_client.GetPhone_number() + " чтобы принять отправте запрос на соеденение", clients[i]);
+                    break;
+                }
+            }
         }
 
         public Task CheckAndConectAsync(string phone_number, ClientObject caller_client)
