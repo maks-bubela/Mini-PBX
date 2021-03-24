@@ -18,8 +18,13 @@ namespace Mini_PBX
         }
         public ClientObject GetFirstClient() { return this.client_1; }
         public ClientObject GetSecondClient() { return this.client_2; }
+        public string GetWaitNumber() { return this.wait_number; }
         public void SetFirstClient(ClientObject client_1) { this.client_1 = client_1; }
-        public void SetSecondClient(ClientObject client_2) {this.client_2 = client_2; }
+        public void SetSecondClient(ClientObject client_2) 
+        {
+            wait_number = null;
+            this.client_2 = client_2; 
+        }
         public bool checkClient(ClientObject client)
         {
             if (this.client_1 == client || this.client_2 == client)
