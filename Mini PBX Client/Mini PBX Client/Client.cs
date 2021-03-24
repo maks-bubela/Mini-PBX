@@ -7,13 +7,10 @@ namespace Mini_PBX_Client
 {
     public class Client
     {
-        public void SendMessage(NetworkStream stream)
+        public void StartChat(NetworkStream stream)
         {
-            Console.Write("Введите номер: ");
-            string message = Console.ReadLine();
-            message = $"Вызов {message} ...";
-            byte[] data = Encoding.Unicode.GetBytes(message);
-            stream.Write(data, 0, data.Length);
+            string message;
+            byte[] data;
             while (true)
             {
                 message = Console.ReadLine();
@@ -22,32 +19,41 @@ namespace Mini_PBX_Client
             }
         }
 
+        public void tryToConect(NetworkStream stream)
+        {
+            Console.Write("Введите номер: ");
+            string message = Console.ReadLine();
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+            StartChat(stream);
+        }
+
         public void ReceiveMessage(NetworkStream stream, TcpClient client)
         {
-            while (true)
+        while (true)
+        {
+            try
             {
-                try
+                byte[] data = new byte[64];
+                StringBuilder builder = new StringBuilder();
+                int bytes = 0;
+                do
                 {
-                    byte[] data = new byte[64];
-                    StringBuilder builder = new StringBuilder();
-                    int bytes = 0;
-                    do
-                    {
-                        bytes = stream.Read(data, 0, data.Length);
-                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
-                    }
-                    while (stream.DataAvailable);
+                    bytes = stream.Read(data, 0, data.Length);
+                    builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                }
+                while (stream.DataAvailable);
 
-                    string message = builder.ToString();
-                    Console.WriteLine(message);
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.ReadLine();
-                    Disconnect(stream, client);
-                }
+                string message = builder.ToString();
+                Console.WriteLine(message);
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+                Disconnect(stream, client);
+            }
+        }
         }
 
         public void Disconnect(NetworkStream stream, TcpClient client)
